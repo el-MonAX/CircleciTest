@@ -3,21 +3,35 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-       - image: circleci/ruby:2.5.1-node
+      - image: circleci/ruby:2.5.1-node
+        environment:
+          PGHOST: 127.0.0.1
+          PGUSER: root
+          RAILS_ENV: test
 
-    working_directory: ~/workspace/CircleciTest # directory where steps will run
+    enviromnment:
+      - RAILS_ENV: test
+
+    # working_directory: ~/workspace/CircleciTest # directory where steps will run
 
     steps:
       - checkout
 
-      # Which version of bundler?
-      - run:
-          name: Which bundler?
-          command: bundle -v
+      - <<: *restore_bundle_cache
+      - <<: *bundle_install
+      - <<: *save_bundle_cache
 
-      - run:
-          name: Bundle Install
-          command: bundle check || bundle install
+      # Which version of bundler?
+      # - run:
+      #     name: Which bundler?
+      #     command: bundle -v
+      #
+      # - run:
+      #     name: Bundle Install
+      #     command: bundle check || bundle install
+
+      # - run: bundle exec rake db:create
+      # - run: bundle exec rake db:schema:load
 
       - run:
           name: Creating database
@@ -37,3 +51,19 @@ jobs:
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
+
+    restore_bundle_cache: &restore_bundle_cache
+        restore_cache:
+          keys:
+            - CircleciTest-{{ checksum "Gemfile.lock" }}
+
+      bundle_install: &bundle_install
+        run:
+          name: Installing gems
+          command: bundle install --path vendor/bundle
+
+      save_bundle_cache: &save_bundle_cache
+        save_cache:
+          key: prodigy_commerce-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
