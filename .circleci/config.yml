@@ -3,47 +3,46 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/ruby:2.5.1-node
-        environment:
-          PGHOST: 127.0.0.1
-          PGUSER: root
-          RAILS_ENV: test
+       - image: circleci/ruby:2.5.1-node
 
-    enviromnment:
-      - RAILS_ENV: test
-
-    # working_directory: ~/workspace/CircleciTest # directory where steps will run
+    working_directory: ~/workspace/CircleciTest
 
     steps:
       - checkout
 
-      - <<: *restore_bundle_cache
-      - <<: *bundle_install
-      - <<: *save_bundle_cache
-
-      # Which version of bundler?
-      # - run:
-      #     name: Which bundler?
-      #     command: bundle -v
-      #
-      # - run:
-      #     name: Bundle Install
-      #     command: bundle check || bundle install
-
-      # - run: bundle exec rake db:create
-      # - run: bundle exec rake db:schema:load
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - CircleciTest-{{ checksum "Gemfile.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - CircleciTest-
 
       - run:
-          name: Creating database
-          command: bundle exec rails db:create
+          name: install dependencies
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
 
-      - run:
-          name: Loading schema
-          command: bundle exec rails db:schema:load
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: CircleciTest-{{ checksum "Gemfile.lock" }}
 
+      # Database setup
+      - run: bundle exec rake db:create
+      - run: bundle exec rake db:schema:load
+
+      # run tests!
       - run:
-          name: Running back-end tests
-          command: bundle exec rspec
+          name: run tests
+          command: |
+            mkdir /tmp/test-results
+            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+
+            bundle exec rspec --format progress \
+                            --format RspecJunitFormatter \
+                            --out /tmp/test-results/rspec.xml \
+                            --format progress \
+                            $TEST_FILES
 
       # collect reports
       - store_test_results:
@@ -52,18 +51,75 @@ jobs:
           path: /tmp/test-results
           destination: test-results
 
-    restore_bundle_cache: &restore_bundle_cache
-        restore_cache:
-          keys:
-            - CircleciTest-{{ checksum "Gemfile.lock" }}
 
-      bundle_install: &bundle_install
-        run:
-          name: Installing gems
-          command: bundle install --path vendor/bundle
 
-      save_bundle_cache: &save_bundle_cache
-        save_cache:
-          key: prodigy_commerce-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
+
+# version: 2
+# jobs:
+#   build:
+#     docker:
+#       # specify the version you desire here
+#       - image: circleci/ruby:2.5.1-node
+#         environment:
+#           PGHOST: 127.0.0.1
+#           PGUSER: root
+#           RAILS_ENV: test
+#
+#     enviromnment:
+#       - RAILS_ENV: test
+#
+#     # working_directory: ~/workspace/CircleciTest # directory where steps will run
+#
+#     steps:
+#       - checkout
+#
+#       - <<: *restore_bundle_cache
+#       - <<: *bundle_install
+#       - <<: *save_bundle_cache
+#
+#       # Which version of bundler?
+#       # - run:
+#       #     name: Which bundler?
+#       #     command: bundle -v
+#       #
+#       # - run:
+#       #     name: Bundle Install
+#       #     command: bundle check || bundle install
+#
+#       # - run: bundle exec rake db:create
+#       # - run: bundle exec rake db:schema:load
+#
+#       - run:
+#           name: Creating database
+#           command: bundle exec rails db:create
+#
+#       - run:
+#           name: Loading schema
+#           command: bundle exec rails db:schema:load
+#
+#       - run:
+#           name: Running back-end tests
+#           command: bundle exec rspec
+#
+#       # collect reports
+#       - store_test_results:
+#           path: /tmp/test-results
+#       - store_artifacts:
+#           path: /tmp/test-results
+#           destination: test-results
+#
+#     restore_bundle_cache: &restore_bundle_cache
+#         restore_cache:
+#           keys:
+#             - CircleciTest-{{ checksum "Gemfile.lock" }}
+#
+#       bundle_install: &bundle_install
+#         run:
+#           name: Installing gems
+#           command: bundle install --path vendor/bundle
+#
+#       save_bundle_cache: &save_bundle_cache
+#         save_cache:
+#           key: prodigy_commerce-{{ checksum "Gemfile.lock" }}
+#           paths:
+#             - vendor/bundle
