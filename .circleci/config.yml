@@ -4,6 +4,10 @@ jobs:
     docker:
       # specify the version you desire here
        - image: circleci/ruby:2.5.1-node
+        environment:
+          PGHOST: 127.0.0.1
+          PGUSER: root
+          RAILS_ENV: test
 
     working_directory: ~/workspace/CircleciTest
 
