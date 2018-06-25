@@ -1,0 +1,11 @@
+= simple_form_for @book.reviews.build, url: book_reviews_path(@book.id), method: :post, html: { class: 'width-70p' } do |f|
+  .form-group
+    = f.input :book_id, label: false, input_html: { value: @book.id, type: 'hidden' }
+    = f.input :user_id, label: false, input_html: { value: current_user.id, type: 'hidden' }
+  .form-group
+    = f.input :rating, required:  false, label: t('review.score'), collection: 1..5, prompt: t('review.rate')
+    = f.input :title, required:  false
+  .form-group.mb-30
+    = f.input :text, required:  false, label: t('review.review')
+  .actions
+    = f.button :submit, t('button.post'), class: "btn btn-default mb-20 pull-right mb-55"

@@ -1,0 +1,35 @@
+%main.container.general-main-wrap
+  %h1.general-title-margin= t('cart.checkout')
+  = render 'steps'
+  = simple_form_for @addresses, url: wizard_path, method: :put, class: 'res-mb-100' do |form|
+    .hidden-xs.hidden-sm
+      .row
+        .col-md-5
+          %h3.general-subtitle= t('settings.billing')
+          %p.general-info-text= t('settings.info_text')
+        .col-md-5.col-md-offset-1
+          %h3.general-subtitle= t('settings.shipping')
+    .row
+      .col-md-5.mb-40
+        .visible-xs.visible-sm
+          %h3.general-subtitle= t('settings.billing')
+          %p.general-info-text= t('settings.info_text')
+        = form.fields_for @addresses.billing do |ff|
+          = render 'addresses/form_fields', f: ff
+      .col-md-5.col-md-offset-1.mb-60
+        .visible-xs.visible-sm
+          %h3.general-subtitle= t('settings.shipping')
+        = form.fields_for @addresses.shipping do |ff|
+          = render 'addresses/form_fields', f: ff
+        .form-group.checkbox
+          %label.checkbox-label
+            = form.check_box :use_billing, class: 'checkbox-input', id: 'use_billing', hidden: true
+            %span.checkbox-icon
+              %i.fa.fa-check
+            %span.checkbox-text= t('settings.use_billing')
+    .general-text-align.mb-60
+      %p.in-gold-500.font-18= t('cart.summary')
+      %table.general-summary-table
+        = render 'order_summary', order: current_order
+    .actions.text-center
+      = form.submit t('checkout.save_and_continue'), class: 'btn btn-default mb-20'

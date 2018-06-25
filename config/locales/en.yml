@@ -1,0 +1,165 @@
+en:
+  button:
+    home: 'Home'
+    shop: 'Shop'
+    orders: 'Orders'
+    settings: 'Settings'
+    log_out: 'Log out'
+    log_in: 'Log in'
+    my_account: 'My account'
+    sign_up: 'Sign up'
+    back_to_store: 'Back to Store'
+    forgot_password: 'Forgot password?'
+    by_now: 'Buy Now'
+    back_to_results: 'Back to results'
+    add_to_cart: 'Add to Cart'
+    read_more: 'Read More'
+    view_more: 'View More'
+    all: 'All'
+    newest_first: 'Newest first'
+    popular_first: 'Popular first'
+    low_to_hight: 'Price: Low to hight'
+    hight_to_low: 'Price: Hight to low'
+    title_A-Z: 'Title A - Z'
+    title_Z-A: 'Title Z - A'
+    get_started: 'Get Started'
+    post: 'Post'
+    go_to_store: 'Go to Store'
+    place_order: 'Place Order'
+    admin: 'Admin panel'
+
+  header:
+    logo: 'Bookstore'
+    shop: 'Shop'
+
+  page:
+    home:
+      carusel:
+        prev: 'Previous'
+        next: 'Next'
+      greeting: 'Welcome to our amazing Bookstore!'
+      text: 'We pore through hundreds of new books each month and select the five best we can find to share with our members.'
+      best_sellers: 'Best Sellers'
+
+    book:
+      show:
+        description: 'Description'
+        materials: 'Materials'
+        dimension: 'Dimensions'
+        published_at: 'Year of publication'
+
+      index:
+        by_category: 'Filter by category'
+        sort_by: 'Sort by'
+        catalog: 'Catalog'
+
+
+  review:
+    review: 'Review'
+    rate: 'Rate a book'
+    write: 'Write a Review'
+    score: 'Score'
+
+  settings:
+    settings: 'Settings'
+    address: 'Address'
+    privacy: 'Privacy'
+    billing: 'Billing Address'
+    shipping: 'Shipping Address'
+    use_billing: 'Use Billing Adress'
+    save: 'Save'
+    e-mail: 'Email'
+    enter_e-mail: 'Enter Email'
+    password: 'Password'
+    old_password: 'Old Password'
+    new_password: 'New Password'
+    confirm_password: 'Confirm Password'
+    remove_account: 'Remove Account'
+    im_agree_lost_all_data: 'I understand that all data will be lost'
+    first_name: 'First Name'
+    last_name: 'Last Name'
+    city: 'City'
+    zip: 'Zip'
+    country: 'Country'
+    country_select: 'Select a country'
+    info_text: 'all fields are required'
+
+  cart:
+    cart: 'Cart'
+    product: 'Product'
+    price: 'Price'
+    quantity: 'Quantity'
+    subtotal: 'SubTotal'
+    empty: 'Cart is empty'
+    checkout: 'Checkout'
+    coupon: 'Enter Your Coupon Code'
+    apply_coupon: 'Apply Coupon'
+    update: 'Update cart'
+    summary: 'Order Summary'
+    coupon: 'Coupon'
+    total: 'Order Total'
+
+  order:
+    my_orders: 'My Orders'
+    number: 'Number'
+    complited_at: 'Completed at'
+    statuss: 'Status'
+    order_total: 'Order Total:'
+    item_total: 'Item Total:'
+    shipping: 'Shipping:'
+    coupon: 'Coupon:'
+    sort_by: 'Sort by'
+    total: 'Total'
+
+    status:
+      in_progress: 'In Progress'
+      in_queue: 'Waiting for processing'
+      in_delivery: 'In delivery'
+      delivered: 'Delivered'
+      canceled: 'Cenceled'
+      all: 'All Orders'
+
+  delivery:
+    delivery_method: 'Shipping Method'
+    method: 'Method'
+    days: 'Days'
+    price: 'Price'
+    pickup: 'Please, pick up Delivery type!'
+
+  credit_card:
+    tooltip: '3-digit security code, usually found on the back of your card. American Express cards has 4-digit code, located on the front'
+
+  confirm:
+    shipments: 'Shipments'
+    payment_info: 'Payment Information'
+    edit: 'edit'
+    delivery: 'Delivery'
+    paymant: 'Payment'
+    confirm: 'Confirm'
+    complete: 'Complete'
+    shipping: 'Shipping'
+    item_total: 'Item Total'
+
+  complete:
+    order: 'Order'
+    thanks: 'Thank You for your Order!'
+    has_been_sent_to: 'An order confirmation has been sent to '
+    book: 'Book'
+    total: 'Total'
+
+  checkout:
+    save_and_continue: 'Save and Continue'
+    place_order: 'Place Order'
+    cart_number: 'Card Number'
+    credit_card: 'Credit Card'
+    name_on_card: 'Name on Card'
+    mm_yy: 'MM / YY'
+    cvv: 'CVV'
+    returning_customer: 'Returning Customer'
+    or: 'or'
+    login_with_password: 'Log in with password'
+    enter_email: 'Enter Email'
+    new_customer: 'New Customer'
+    quick_register: 'Quick Register'
+    quick_description: "You'll be able to create password later"
+    continue: 'Continue to Checkout'

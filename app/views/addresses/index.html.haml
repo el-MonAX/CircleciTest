@@ -1,0 +1,30 @@
+%main.container
+  %h1.general-title-margin= t('settings.settings')
+  %ul.nav.clearfix.mb-20{role: "tablist"}
+    %li.tab-item{role: "presentation"}
+      = link_to t('settings.address'), settings_addresses_path, class: 'tab-link filter-link active'
+    %li.tab-item{role: "presentation"}
+      = link_to t('settings.privacy'), settings_privacy_path, class: 'tab-link'
+  .tab-content
+    = simple_form_for @addresses, url: settings_addresses_path, method: :put, class: 'res-mb-100' do |form|
+      .hidden-xs.hidden-sm
+        .row
+          .col-md-5
+            %h3.general-subtitle= t('settings.billing')
+            %p.general-info-text= t('settings.info_text')
+          .col-md-5.col-md-offset-1
+            %h3.general-subtitle= t('settings.shipping')
+      .row
+        .col-md-5.mb-40
+          .visible-xs.visible-sm
+            %h3.general-subtitle= t('settings.billing')
+            %p.general-info-text= t('settings.info_text')
+          = form.fields_for @addresses.billing do |ff|
+            = render 'form_fields', f: ff
+        .col-md-5.col-md-offset-1.mb-60
+          .visible-xs.visible-sm
+            %h3.general-subtitle= t('settings.shipping')
+          = form.fields_for @addresses.shipping do |ff|
+            = render 'form_fields', f: ff
+      .actions.text-center
+        = form.submit t('settings.save'), class: 'btn btn-default mb-20'
